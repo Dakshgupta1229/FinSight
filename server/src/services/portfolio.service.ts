@@ -1,3 +1,5 @@
+import { getStockQuote } from "./stock.service.js";
+import { PortfolioResponse } from "../types/portfolio.types.js";
 import prisma from "../lib/prisma.js";
 import { CreatePortfolioInput } from "../types/portfolio.types.js";
 
@@ -15,8 +17,10 @@ export const createHolding = async (
   });
 };
 
-export const getPortfolio = async (userId: string) => {
-  return prisma.portfolio.findMany({
+export const getPortfolio = async (
+  userId: string
+): Promise<PortfolioResponse> => {
+  const holdings = await prisma.portfolio.findMany({
     where: {
       userId,
     },
@@ -24,6 +28,54 @@ export const getPortfolio = async (userId: string) => {
       createdAt: "desc",
     },
   });
+
+  let totalInvestment = 0;
+  let totalCurrentValue = 0;
+
+  const portfolio = await Promise.all(
+    holdings.map(async (holding) => {
+      const stock = await getStockQuote(holding.symbol);
+
+      const investment =
+        holding.quantity * holding.buyPrice;
+
+      const currentValue =
+        holding.quantity * stock.currentPrice;
+
+      const profit =
+        currentValue - investment;
+
+      const profitPercent =
+        investment === 0
+          ? 0
+          : (profit / investment) * 100;
+
+      totalInvestment += investment;
+      totalCurrentValue += currentValue;
+
+      return {
+        id: holding.id,
+        symbol: holding.symbol,
+        quantity: holding.quantity,
+        buyPrice: holding.buyPrice,
+        currentPrice: stock.currentPrice,
+        investment,
+        currentValue,
+        profit,
+        profitPercent,
+      };
+    })
+  );
+
+  return {
+    holdings: portfolio,
+    summary: {
+      totalInvestment,
+      totalCurrentValue,
+      totalProfit:
+        totalCurrentValue - totalInvestment,
+    },
+  };
 };
 
 export const deleteHolding = async (
