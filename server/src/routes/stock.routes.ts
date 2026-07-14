@@ -6,7 +6,10 @@ const router = Router();
 // Company Profile
 router.get("/company/:symbol", stockController.getCompany);
 
-// Live Stock Quote
+// Historical Prices
+router.get("/history/:symbol", stockController.getHistory);
+
+// Live Quote
 router.get("/:symbol", stockController.getQuote);
 
 export default router;

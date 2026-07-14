@@ -38,3 +38,28 @@ export const getCompany = async (
     next(error);
   }
 };
+export const getHistory = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const symbol = String(req.params.symbol);
+
+    const days = req.query.days
+      ? Number(req.query.days)
+      : 30;
+
+    const history = await stockService.getHistoricalPrices(
+      symbol,
+      days
+    );
+
+    res.status(200).json({
+      success: true,
+      data: history,
+    });
+  } catch (error) {
+    next(error);
+  }
+};

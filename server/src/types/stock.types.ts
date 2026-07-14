@@ -23,3 +23,7 @@ export interface CompanyProfile {
   weburl: string;
   logo: string;
 }
+export interface HistoricalPrice {
+  date: string;
+  close: number;
+}
