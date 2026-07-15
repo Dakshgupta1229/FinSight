@@ -58,3 +58,38 @@ Do NOT provide financial guarantees.
     analysis: response.text,
   };
 };
+export const analyzeStock = async (symbol: string) => {
+  const quote = await stockService.getStockQuote(symbol);
+
+  const prompt = `
+You are a professional financial analyst.
+
+Analyze the stock: ${symbol}
+
+Current Price: ${quote.currentPrice}
+
+Provide:
+
+1. Company Overview
+2. Business Strengths
+3. Growth Opportunities
+4. Risks
+5. Long-Term Outlook
+6. Investment Recommendation (Buy / Hold / Sell)
+7. Confidence Score (0-100)
+
+Keep the answer under 300 words.
+
+Do NOT provide financial guarantees.
+`;
+
+  const response =
+    await gemini.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: prompt,
+    });
+
+  return {
+    analysis: response.text,
+  };
+};

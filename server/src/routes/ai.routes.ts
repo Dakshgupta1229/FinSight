@@ -6,9 +6,16 @@ const router = Router();
 
 router.use(protect);
 
+// Existing Portfolio AI
 router.post(
   "/analyze",
   aiController.analyzePortfolio
+);
+
+// New Single Stock AI
+router.post(
+  "/analyze-stock",
+  aiController.analyzeStock
 );
 
 export default router;
