@@ -6,7 +6,6 @@ import PortfolioChart from "../components/dashboard/PortfolioChart";
 import Watchlist from "../components/dashboard/Watchlist";
 import News from "../components/dashboard/News";
 import AIAnalysis from "../components/dashboard/AIAnalysis";
-import ThemeToggle from "../components/ui/ThemeToggle";
 
 export default function Dashboard() {
   return (

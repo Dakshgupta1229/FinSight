@@ -1,5 +1,3 @@
-import type { ReactNode } from "react";
-
 interface ConfirmDialogProps {
   open: boolean;
   title: string;
@@ -34,6 +32,7 @@ export default function ConfirmDialog({
 
         <div className="mt-6 flex justify-end gap-3">
           <button
+            type="button"
             onClick={onCancel}
             className="rounded-lg border px-4 py-2 hover:bg-gray-100"
           >
@@ -41,6 +40,7 @@ export default function ConfirmDialog({
           </button>
 
           <button
+            type="button"
             onClick={onConfirm}
             className="rounded-lg bg-red-600 px-4 py-2 text-white hover:bg-red-700"
           >
