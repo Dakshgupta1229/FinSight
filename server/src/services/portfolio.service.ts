@@ -34,36 +34,61 @@ export const getPortfolio = async (
 
   const portfolio = await Promise.all(
     holdings.map(async (holding) => {
-      const stock = await getStockQuote(holding.symbol);
+      try {
+        const stock = await getStockQuote(
+          holding.symbol
+        );
 
-      const investment =
-        holding.quantity * holding.buyPrice;
+        const investment =
+          holding.quantity * holding.buyPrice;
 
-      const currentValue =
-        holding.quantity * stock.currentPrice;
+        const currentValue =
+          holding.quantity * stock.currentPrice;
 
-      const profit =
-        currentValue - investment;
+        const profit =
+          currentValue - investment;
 
-      const profitPercent =
-        investment === 0
-          ? 0
-          : (profit / investment) * 100;
+        const profitPercent =
+          investment === 0
+            ? 0
+            : (profit / investment) * 100;
 
-      totalInvestment += investment;
-      totalCurrentValue += currentValue;
+        totalInvestment += investment;
+        totalCurrentValue += currentValue;
 
-      return {
-        id: holding.id,
-        symbol: holding.symbol,
-        quantity: holding.quantity,
-        buyPrice: holding.buyPrice,
-        currentPrice: stock.currentPrice,
-        investment,
-        currentValue,
-        profit,
-        profitPercent,
-      };
+        return {
+          id: holding.id,
+          symbol: holding.symbol,
+          quantity: holding.quantity,
+          buyPrice: holding.buyPrice,
+          currentPrice: stock.currentPrice,
+          investment,
+          currentValue,
+          profit,
+          profitPercent,
+        };
+      } catch (error) {
+        console.error(
+          `Failed to fetch stock: ${holding.symbol}`,
+          error
+        );
+
+        const investment =
+          holding.quantity * holding.buyPrice;
+
+        return {
+          id: holding.id,
+          symbol: holding.symbol,
+          quantity: holding.quantity,
+          buyPrice: holding.buyPrice,
+          currentPrice: 0,
+          investment,
+          currentValue: 0,
+          profit: -investment,
+          profitPercent: -100,
+          error: true,
+        };
+      }
     })
   );
 
