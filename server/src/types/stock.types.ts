@@ -27,3 +27,16 @@ export interface HistoricalPrice {
   date: string;
   close: number;
 }
+export interface StockSearchResult {
+  symbol: string;
+  description: string;
+  type: string;
+}
+export interface MarketNews {
+  headline: string;
+  summary: string;
+  source: string;
+  url: string;
+  image: string;
+  datetime: string;
+}

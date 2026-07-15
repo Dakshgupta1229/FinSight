@@ -63,3 +63,39 @@ export const getHistory = async (
     next(error);
   }
 };
+
+export const searchStocks = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const query = String(req.query.q || "");
+
+    const stocks = await stockService.searchStocks(query);
+
+    res.status(200).json({
+      success: true,
+      data: stocks,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getMarketNews = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const news = await stockService.getMarketNews();
+
+    res.status(200).json({
+      success: true,
+      data: news,
+    });
+  } catch (error) {
+    next(error);
+  }
+};

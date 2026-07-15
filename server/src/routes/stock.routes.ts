@@ -7,8 +7,9 @@ const router = Router();
 router.get("/company/:symbol", stockController.getCompany);
 
 // Historical Prices
+router.get("/search", stockController.searchStocks);
+router.get("/news", stockController.getMarketNews);
 router.get("/history/:symbol", stockController.getHistory);
-
 // Live Quote
 router.get("/:symbol", stockController.getQuote);
 

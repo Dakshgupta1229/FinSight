@@ -16,4 +16,5 @@ export const env = {
     (process.env.JWT_EXPIRES_IN as StringValue) || "7d",
 
   FINNHUB_API_KEY: process.env.FINNHUB_API_KEY || "",
+  GEMINI_API_KEY: process.env.GEMINI_API_KEY || "",
 };

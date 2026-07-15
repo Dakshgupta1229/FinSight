@@ -1,5 +1,7 @@
 import finnhubApi from "../lib/finnhub.js";
+import { StockSearchResult } from "../types/stock.types.js";
 import axios from "axios";
+import { MarketNews } from "../types/stock.types.js";
 
 import {
   StockQuote,
@@ -95,6 +97,47 @@ export const getCompanyProfile = async (
     }
 
     throw error;
+  }
+};
+
+export const searchStocks = async (
+  query: string
+): Promise<StockSearchResult[]> => {
+  try {
+    const response = await finnhubApi.get("/search", {
+      params: {
+        q: query,
+      },
+    });
+
+    return response.data.result.map((stock: any) => ({
+      symbol: stock.symbol,
+      description: stock.description,
+      type: stock.type,
+    }));
+  } catch {
+    throw new Error("Unable to search stocks.");
+  }
+};
+
+export const getMarketNews = async (): Promise<MarketNews[]> => {
+  try {
+    const response = await finnhubApi.get("/news", {
+      params: {
+        category: "general",
+      },
+    });
+
+    return response.data.slice(0, 10).map((news: any) => ({
+      headline: news.headline,
+      summary: news.summary,
+      source: news.source,
+      url: news.url,
+      image: news.image,
+      datetime: new Date(news.datetime * 1000).toISOString(),
+    }));
+  } catch {
+    throw new Error("Unable to fetch market news.");
   }
 };
 

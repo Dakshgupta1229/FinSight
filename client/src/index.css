@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+/* Tell Tailwind v4 to use the .dark class */
+@custom-variant dark (&:where(.dark, .dark *));
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+
+  @apply bg-slate-100 text-slate-900 transition-colors duration-300;
+}
+
+.dark body {
+  @apply bg-slate-950 text-slate-100;
+}
