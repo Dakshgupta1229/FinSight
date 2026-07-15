@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { searchStocks } from "../services/trie.service";
+import { searchStocks } from "../services/trie.service.js";
 
 export const searchStockSymbols = (
   req: Request,

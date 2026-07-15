@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { searchStockSymbols } from "../controllers/search.controller";
+import { searchStockSymbols } from "../controllers/search.controller.js";
 
 const router = Router();
 

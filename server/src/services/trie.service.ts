@@ -1,5 +1,5 @@
-import { Trie } from "../dsa/Trie";
-import { STOCKS } from "../data/stocks";
+import { Trie } from "../dsa/Trie.js";
+import { STOCKS } from "../data/stocks.js";
 
 const trie = new Trie();
 
