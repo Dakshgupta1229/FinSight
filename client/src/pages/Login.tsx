@@ -48,7 +48,7 @@ export default function Login() {
           type="email"
           placeholder="Email"
           {...register("email")}
-          className="mb-2 w-full rounded-lg border p-3"
+          className="mb-2 w-full rounded-lg border border-gray-300 bg-white p-3 text-black placeholder-gray-400 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
         />
 
         {errors.email && (
@@ -61,7 +61,7 @@ export default function Login() {
           type="password"
           placeholder="Password"
           {...register("password")}
-          className="mb-2 w-full rounded-lg border p-3"
+          className="mb-2 w-full rounded-lg border border-gray-300 bg-white p-3 text-black placeholder-gray-400 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
         />
 
         {errors.password && (
@@ -71,17 +71,18 @@ export default function Login() {
         )}
 
         <button
+          type="submit"
           disabled={isSubmitting}
-          className="w-full rounded-lg bg-blue-600 py-3 font-semibold text-white hover:bg-blue-700 disabled:opacity-50"
+          className="w-full rounded-lg bg-blue-600 py-3 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {isSubmitting ? "Logging in..." : "Login"}
         </button>
 
-        <p className="mt-5 text-center text-sm">
+        <p className="mt-5 text-center text-sm text-gray-600">
           Don't have an account?{" "}
           <Link
             to="/register"
-            className="font-semibold text-blue-600"
+            className="font-semibold text-blue-600 hover:underline"
           >
             Register
           </Link>
