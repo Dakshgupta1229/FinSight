@@ -28,17 +28,20 @@ export default function StockAnalysisModal({
             <BrainCircuit className="text-purple-600" size={28} />
 
             <div>
-              <h2 className="text-2xl font-bold">
+              <h2 className="text-2xl font-bold text-slate-900">
                 AI Stock Analysis
               </h2>
 
-              <p className="text-gray-500">
+              <p className="text-slate-600">
                 {symbol}
               </p>
             </div>
           </div>
 
-          <button onClick={onClose}>
+          <button
+  onClick={onClose}
+  className="text-slate-600 hover:text-black"
+>
             <X size={28} />
           </button>
         </div>
@@ -53,16 +56,24 @@ export default function StockAnalysisModal({
         )}
 
         {analysisMutation.isPending && (
-          <div className="py-10 text-center">
-            Analyzing...
-          </div>
-        )}
+  <div className="py-10 text-center text-slate-900">
+    <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-4 border-purple-600 border-t-transparent"></div>
+
+    <p className="text-lg font-semibold">
+      Analyzing {symbol}...
+    </p>
+
+    <p className="mt-2 text-sm text-slate-600">
+      AI is generating investment insights.
+    </p>
+  </div>
+)}
 
         {analysisMutation.data && (
-          <div className="mt-6 whitespace-pre-wrap leading-8">
-            {analysisMutation.data.data.analysis}
-          </div>
-        )}
+  <div className="mt-6 whitespace-pre-wrap leading-8 text-slate-800">
+    {analysisMutation.data.data.analysis}
+  </div>
+)}
       </div>
     </div>
   );
